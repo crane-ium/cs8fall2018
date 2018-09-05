@@ -1,11 +1,16 @@
-#include "list.h"
-#include "my_queue.cpp"
+#ifndef MY_QUEUE_H
+#define MY_QUEUE_H
+
+#include <iostream>
+#include "my_list.h"
+
+/* Queue:
+ * Control a linked list with a FIFO system */
 
 template <class T>
-class Queue
-{
+class Queue{
 public:
-    Queue();
+    Queue():_head(nullptr){};
 
     ~Queue();
     Queue(const Queue<T>& other);
@@ -21,9 +26,20 @@ public:
         for(node<U>* walker = q._front; walker != nullptr; walker = walker->_next){
             outs << walker->_item;
         }
-        outs << "NULL" << endl;
+        outs << "|||" << endl;
         return outs;
     }
 private:
-    node<T>* _front;
+    node<T>* _head;
 };
+#endif //MY_QUEUE_H
+
+template <class T>
+Queue<T>::~Queue(){
+    while(_head != nullptr){
+        delete_head(_head);
+    }
+}
+
+//template <class T>
+//Queue<T>::
