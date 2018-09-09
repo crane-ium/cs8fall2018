@@ -56,8 +56,11 @@ Queue<T>::Queue(const Queue<T>& q){
 
 template <class T>
 Queue<T>& Queue<T>::operator =(const Queue<T>& rhs){
-    Queue<T> q(rhs);
-    return q;
+    //copy-swap idiom copy assignment operator
+    Queue<T> temp(rhs);
+    swap(this->_head, temp._head);
+    swap(this->_tail, temp._tail);
+    return *this;
 }
 
 template <class T>

@@ -64,8 +64,10 @@ Stack<T>::Stack(const Stack<T>& other){
 
 template <class T>
 Stack<T>& Stack<T>::operator =(const Stack<T>& rhs){
-    Stack<T> s(rhs);
-    return s;
+    //using a copy-swap idiom copy assignment operator
+    Stack<T> temp(rhs);
+    swap(_top, temp._top);
+    return *this;
 }
 
 template <class T>
