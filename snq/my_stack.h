@@ -1,8 +1,8 @@
-/*Stack:
- * Using a linked list, control the linked list in a FILO system */
-
 #ifndef MY_STACK_H
 #define MY_STACK_H
+
+/*Stack:
+ * Using a linked list, control the linked list in a FILO system */
 
 #include <iostream>
 #include "my_list.h"
