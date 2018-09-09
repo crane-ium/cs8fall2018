@@ -25,10 +25,9 @@ public:
     T pop(); //Pops the head (last in) and returns item
     T top(); //returns item of head
     bool empty();
-    template <class U>
-    friend ostream& operator << (ostream& outs, const Stack<U>& s){
+    friend ostream& operator << (ostream& outs, const Stack<T>& s){
         //iterate through the LL and cout each node
-        for(node<U>* walker = s._top; walker != nullptr; walker = walker->_next){
+        for(node<T>* walker = s._top; walker != nullptr; walker = walker->_next){
             outs << *walker;
         }
         outs << "|||" << endl; //put the null at the end of the list
@@ -75,11 +74,6 @@ void Stack<T>::push(T item){
     insert_head(_top, item);
 }
 
-struct ExceptionEmptyList : public exception{
-    const char * what() const throw(){
-        return "Empty linked list";
-    }
-};
 //assert macro
 #define MY_ASSERT(val,err) if (!val) throw err
 
@@ -87,6 +81,8 @@ struct ExceptionEmptyList : public exception{
 template <class T>
 T Stack<T>::pop(){
     //Requires the user to check if it is empty first
+    //These assert macros are redundant after the throw exception built into the LL
+    //But they're kinda cool so i'll leave it for now
     MY_ASSERT(!this->empty(), ExceptionEmptyList());
     return delete_head(_top);
 }
