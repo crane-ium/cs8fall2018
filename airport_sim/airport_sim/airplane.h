@@ -21,11 +21,13 @@ class airplane : public vehicle
 {
 public:
     //CTOR
-    airplane(): vehicle(), wings(4){}
+    airplane(unsigned int t): vehicle(), wings(4), start_time(t){}
     //MODIFCATION MEMBER FUNCTIONS
-
+    //CONSTANT MEMBER FUNCTIONS
+    unsigned int get_start_time() const { return start_time;}
 protected:
     int wings;
+    unsigned int start_time;
 };
 
 #endif // AIRPLANE_H

@@ -5,32 +5,28 @@
 
 namespace runway{
     //Runs sim of the runway
-    class takeoff_sim{
-    public:
-        //CTORs
-        takeoff_sim();
-        //MODIFICATION MEMBER FUNCTIONS
-        void sim_second(); //sims a second
-        //CONSTANT MEMBER FUNCTIONS
-        unsigned int get_seconds() const { return wait_time;} //get current time
-    private:
-        unsigned int wait_time; //current time for airplane on takeoff
-    };
+//    class takeoff_sim{
+//    public:
+//        //CTORs
+//        takeoff_sim();
+//        //MODIFICATION MEMBER FUNCTIONS
+//        void sim_second(); //sims a second
+//        //CONSTANT MEMBER FUNCTIONS
+//        unsigned int get_seconds() const { return wait_time;} //get current time
+//    private:
+//        unsigned int wait_time; //current time for airplane on takeoff
+//    };
 
-    class landing_sim{
-    public:
-        //CTORs
-        landing_sim(unsigned int f = 60);
-        //MODIFICATOIN MEMBER FUNCTOINS
-        void sim_second(); //sim a sec
-        //CONSTANT MEMBER FUNCTIONS
-        unsigned int get_seconds() const {return wait_time;}
-        bool is_crashed() const { return wait_time > fuel_limit;} //return if plane crashed
-    private:
-        unsigned int wait_time;
-        unsigned int fuel_limit;
-        bool crashed;
-    };
+//    class landing_sim{
+//    public:
+//        //CTORs
+//        landing_sim(unsigned int f = 60, unsigned int start_time);
+//        //CONSTANT MEMBER FUNCTIONS
+//        unsigned int get_seconds() const {return start_time;}
+//    private:
+//        unsigned int start_time;
+//        unsigned int fuel_limit;
+//    };
 
     //Checks whether the probability is true for that query based on % chance
     class bool_checker{

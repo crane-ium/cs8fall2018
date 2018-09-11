@@ -1,5 +1,7 @@
 #include <cassert>
 #include "runway_controls.h"
+#include <cstdlib>
+#include <time.h>
 
 //l_time: landing time
 //t_time: takeoff time
@@ -24,35 +26,34 @@ control_values::control_values(unsigned int l_time,
     total_time = t_total;
 }
 
-takeoff_sim::takeoff_sim(){
-    wait_time = 0;
-}
+//takeoff_sim::takeoff_sim(){
+//    wait_time = 0;
+//}
 
-void takeoff_sim::sim_second(){
-    wait_time++;
-}
+//void takeoff_sim::sim_second(){
+//    wait_time++;
+//}
 
-landing_sim::landing_sim(unsigned int f){
-    wait_time = 0;
-    fuel_limit = f;
-    crashed = false;
-}
+//landing_sim::landing_sim(unsigned int f, unsigned int start_time){
+//    wait_time = start_time;
+//    fuel_limit = f;
+//}
 
-void landing_sim::sim_second(){
-    if(!is_crashed())
-        wait_time++;
-    else
-        crashed = true;
-}
+//void landing_sim::sim_second(){
+//    if(!is_crashed())
+//        wait_time++;
+//    else
+//        crashed = true;
+//}
 
 bool_checker::bool_checker(double p){
     assert(p >= 0);
     assert(p <= 1);
     probability = p;
+    srand(time(NULL)); //seed the srand. Omit if you want repeatable results
 }
 
 bool bool_checker::query() const{
-#include <cstdlib>
     return (rand() < probability * RAND_MAX);
 }
 
