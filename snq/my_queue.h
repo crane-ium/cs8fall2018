@@ -82,7 +82,7 @@ template <class T>
 T Queue<T>::pop(){
     T item = delete_head(_head);
     length--;
-    assert(length > 0); //guarantee length is not less than 0
+    assert(length >= 0); //guarantee length is not less than 0
     if(_head == nullptr)
         _tail = nullptr;
     return item;
