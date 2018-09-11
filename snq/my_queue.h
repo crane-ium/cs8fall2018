@@ -2,6 +2,7 @@
 #define MY_QUEUE_H
 
 #include <iostream>
+#include <cassert>
 #include "my_list.h"
 
 /* Queue:
@@ -12,7 +13,7 @@ using namespace std;
 template <class T>
 class Queue{
 public:
-    Queue():_head(nullptr), _tail(nullptr){}
+    Queue():_head(nullptr), _tail(nullptr), length(0){}
 
     ~Queue();
     Queue(const Queue<T>& other);
@@ -30,9 +31,11 @@ public:
         outs << "|||" << endl;
         return outs;
     }
+    size_t get_size() const {return length;} //returns length of queue
 private:
     node<T>* _head;
     node<T>* _tail;
+    size_t length;
 };
 
 template <class T>
@@ -46,6 +49,7 @@ template <class T>
 Queue<T>::Queue(const Queue<T>& q){
     this->_head = nullptr;
     this->_tail = nullptr;
+    length = q.get_size();
     if(q._head != nullptr){
         _tail = insert_head(_head, q._head->_item);
         for(node<T>* walker = q._head->_next; walker != nullptr; walker = walker->_next){
@@ -60,6 +64,7 @@ Queue<T>& Queue<T>::operator =(const Queue<T>& rhs){
     Queue<T> temp(rhs);
     swap(this->_head, temp._head);
     swap(this->_tail, temp._tail);
+    swap(this->length, temp.length);
     return *this;
 }
 
@@ -70,11 +75,14 @@ void Queue<T>::push(T item){
         this->_tail = insert_head(this->_head, item);
     }else
         this->_tail = insert_after(_tail, item);
+    length++;
 }
 
 template <class T>
 T Queue<T>::pop(){
     T item = delete_head(_head);
+    length--;
+    assert(length > 0); //guarantee length is not less than 0
     if(_head == nullptr)
         _tail = nullptr;
     return item;
