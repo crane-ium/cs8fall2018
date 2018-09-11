@@ -19,6 +19,14 @@ private:
 
 int main()
 {
-    runway_controls::control_values::control_values cv(5, 15, 0.10, 0.08, 20, 1440);
+    runway::control_values cv(5,
+                                                       15,
+                                                       0.10,
+                                                       0.08,
+                                                       20,
+                                                       1440);
 
+    for(int s = 1; s <=cv.get_t_total(); s++){
+
+    }
 }

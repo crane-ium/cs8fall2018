@@ -3,21 +3,33 @@
 
 #include <cstdlib>
 
-namespace runway_controls{
+namespace runway{
     //Runs sim of the runway
     class takeoff_sim{
     public:
         //CTORs
-        takeoff_sim(unsigned int s = 60);
+        takeoff_sim();
         //MODIFICATION MEMBER FUNCTIONS
         void sim_second(); //sims a second
-        void start_sim(); //resets current time if not busy
-        //CONSTANT MEMBER FUNCTION
-        bool is_busy() const { //Return whether sim is occupied
-                    return (current_time_seconds > 0);}
+        //CONSTANT MEMBER FUNCTIONS
+        unsigned int get_seconds() const { return wait_time;} //get current time
     private:
-        unsigned int run_time_length_seconds; //specified max runtime
-        unsigned int current_time_seconds; //time remaining
+        unsigned int wait_time; //current time for airplane on takeoff
+    };
+
+    class landing_sim{
+    public:
+        //CTORs
+        landing_sim(unsigned int f = 60);
+        //MODIFICATOIN MEMBER FUNCTOINS
+        void sim_second(); //sim a sec
+        //CONSTANT MEMBER FUNCTIONS
+        unsigned int get_seconds() const {return wait_time;}
+        bool is_crashed() const { return wait_time > fuel_limit;} //return if plane crashed
+    private:
+        unsigned int wait_time;
+        unsigned int fuel_limit;
+        bool crashed;
     };
 
     //Checks whether the probability is true for that query based on % chance
@@ -39,6 +51,7 @@ namespace runway_controls{
         void add_number(double val);
         //CONST MEMBER FUNCTIONS
         std::size_t get_count() const {return count;} //times numbers were added
+        double average() const;
 //        unsigned int get_count() const {return count;}
     private:
         std::size_t count; //times numbers were added
