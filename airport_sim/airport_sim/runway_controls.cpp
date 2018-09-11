@@ -26,13 +26,20 @@ control_values::control_values(unsigned int l_time,
     total_time = t_total;
 }
 
-//takeoff_sim::takeoff_sim(){
-//    wait_time = 0;
-//}
+airplane_sim::airplane_sim(unsigned int s){
+    start_time = s;
+    current_time = 0;
+}
 
-//void takeoff_sim::sim_second(){
-//    wait_time++;
-//}
+void airplane_sim::sim_second(){
+    if(is_busy())
+        current_time--;
+}
+
+void airplane_sim::sim_reset(){
+    if(!is_busy())
+        current_time = start_time;
+}
 
 //landing_sim::landing_sim(unsigned int f, unsigned int start_time){
 //    wait_time = start_time;

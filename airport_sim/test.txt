@@ -1,0 +1,18 @@
+=====================================
+time to take off       : 15
+Time to land           : 5
+Probability of landing : 0.1
+Probability of takeoff : 0.08
+Fuel limit (crash time): 20
+Total sim time         : 1440
+
+
+.............................
+Planes landed   : 125
+Planes took off : 93
+Planes crashed  : 0
+Avg landing wait time: 6.096
+Avg takeoff wait time: 104.935
+Planes in landing queue: 0
+Planes in takeoff queue: 4
+Press <RETURN> to close this window...

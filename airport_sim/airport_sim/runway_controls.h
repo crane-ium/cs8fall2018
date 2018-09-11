@@ -5,17 +5,19 @@
 
 namespace runway{
     //Runs sim of the runway
-//    class takeoff_sim{
-//    public:
-//        //CTORs
-//        takeoff_sim();
-//        //MODIFICATION MEMBER FUNCTIONS
-//        void sim_second(); //sims a second
-//        //CONSTANT MEMBER FUNCTIONS
-//        unsigned int get_seconds() const { return wait_time;} //get current time
-//    private:
-//        unsigned int wait_time; //current time for airplane on takeoff
-//    };
+    class airplane_sim{
+    public:
+        //CTORs
+        airplane_sim(unsigned int s = 60);
+        //MODIFICATION MEMBER FUNCTIONS
+        void sim_second(); //sims a second
+        void sim_reset(); //resets the sim to start anew
+        //CONSTANT MEMBER FUNCTIONS
+        bool is_busy() const { return (current_time > 0);}
+    private:
+        unsigned int start_time; //max wait time
+        unsigned int current_time; //current time for airplane on takeoff
+    };
 
 //    class landing_sim{
 //    public:

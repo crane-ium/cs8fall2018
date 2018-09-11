@@ -1,0 +1,6 @@
+Work Report:
+
+It seems overly complex to control the simulations
+q.pop()->item doesn't work in the context "landing_time = s - q_l.top()->get_start_time();" so i have to pop seperately
+[FIXED]My numbers seem off
+[FIXED?]Crashed once randomly because of a miscount. I think it's fixed but maybe not.
