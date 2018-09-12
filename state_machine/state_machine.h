@@ -16,13 +16,21 @@ namespace sm{
 
     class STokenizer{
     public:
-        Stokenizer();
-        void get_table(int t[][MAX_COLUMNS]);
+        //CTORs
+        STokenizer();
+        STokenizer(const string& s);
+        //BIG 3
+
+        //MOD MEMBER FUNCS
+        void get_table(int t[][MAX_COLUMNS]); //if you wanted to set a completely new table
+        void set_string(const string& s); //sets our input to a new string
+        bool get_token(); //returns if there is a token in string[current_pos:]
+        //CONST MEMBER FUNCS
         void print_table() const;
-        void set();
     private:
-        string s;
-        static int _table[MAX_ROWS][MAX_COLUMNS];
+        string input;
+        unsigned int current_pos;
+        static int _table[MAX_ROWS][MAX_COLUMNS]; //static across all instances
         void make_table();
         void mark_table(const int row, int start, int end, int state);
         void mark_table(int start_row, int end_row, int start, int end, int state);

@@ -7,23 +7,18 @@
 
 int sm::STokenizer::_table[MAX_ROWS][MAX_COLUMNS];
 
-sm::STokenizer::Stokenizer(){
-//    _table[MAX_ROWS][MAX_COLUMNS];
+sm::STokenizer::STokenizer(){
+    input = "";
     make_table();
-    mark_table(0, 1, 5, 8, 1);
+    current_pos = 0;
 }
 
-void sm::STokenizer::set(){
-    make_table();
-    mark_table(0, 1, 5, 8, 5);
+sm::STokenizer::STokenizer(const string& s): STokenizer(){
+    input = s;
 }
 
 void sm::STokenizer::make_table(){
-    for(int r = 0; r < MAX_ROWS; r++){
-        for(int c = 0; c < MAX_COLUMNS; c++){
-            this->_table[r][c] = -1;
-        }
-    }
+    mark_table(0, MAX_ROWS-1, 1, MAX_COLUMNS-1, -1);
 }
 
 void sm::STokenizer::mark_table(int row, int start, int end, int state){
@@ -53,4 +48,17 @@ void sm::STokenizer::print_table() const{
         }
         std::cout << endl;
     }
+}
+
+bool sm::STokenizer::get_token(){
+    char* c; //character walker
+    unsigned int last_success = current_pos;
+    cout << endl;
+    for(c = &input[current_pos]; *c != NULL; c++)
+        cout << setw(2) << *c;
+}
+
+void sm::STokenizer::set_string(const string& s){
+    input = s;
+    current_pos = 0;
 }
