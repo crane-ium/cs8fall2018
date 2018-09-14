@@ -22,7 +22,7 @@ public:
     void push(T item);
     T pop(); //Remove and return first item in queue
     T top(); //return first item in queue
-    bool empty(); //return T if _head == nullptr
+    bool empty() const; //return T if _head == nullptr
     friend ostream& operator << (ostream& outs, const Queue<T>& q){
         //iterate through the queue with a walker and output each node
         for(node<T>* walker = q._head; walker != nullptr; walker = walker->_next){
@@ -94,7 +94,7 @@ T Queue<T>::top(){
 }
 
 template <class T>
-bool Queue<T>::empty(){
+bool Queue<T>::empty() const{
     return (this->_head == nullptr) ? true : false;
 }
 
