@@ -45,6 +45,7 @@ void sm::SToken::set_state_names(){
     snames[INT] = "INTEGER";
     snames[DOUBLE] = "DOUBLE";
     snames[SPACE] = "SPACE";
+    snames[COMMA] = "COMMA";
 }
 
 void sm::SToken::set_state(int new_state){

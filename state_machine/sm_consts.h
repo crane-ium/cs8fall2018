@@ -15,10 +15,11 @@ const int WORD = 10;
 const int INT = 1;
 const int DOUBLE = 3;
 const int SPACE = 5;
+const int COMMA = 6;
 
 //
 const int SSTATE[] ={ //success state const
-    WORD, INT, DOUBLE, SPACE
+    WORD, INT, DOUBLE, SPACE, COMMA
 };
 
 //strings holding an array of characters to be categorized
@@ -26,6 +27,7 @@ const string CHARS = "abcdefghijklmnopqrtstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const string NUMS = "0123456789";
 const string NEG = "-";
 const string DEC = ".";
+const string COMMAS = ",";
 const string PUNCS = ",.:;'\"()[]{}-!@#$%^&*<>?_-=+`~/|\\";
 const string SPACES = " _";
 

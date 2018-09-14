@@ -36,6 +36,9 @@ void sm::STokenizer::make_table(){
     //RULES FOR SPACES
     mark_table(0, 0, SPACES, 5);
     mark_table(5, 5, SPACES, 5);
+    //RULES FOR SPECIFIC PUNCTUATION
+    mark_table(0, 0, COMMAS, 6);
+    mark_table(6,6, ' ', 6);
 }
 
 void sm::STokenizer::mark_table(int row, int start, int end, int state){
