@@ -1,9 +1,10 @@
 #include "smtoken.h"
 
 string sm::SToken::snames[MAX_ROWS];
+bool sm::SToken::already_set_state_names = false;
 
 sm::SToken::SToken(){
-    _s = "~test~";
+    _s = "";
     state = -1;
     set_state_names();
 }
@@ -39,13 +40,22 @@ sm::SToken& sm::SToken::operator =(const SToken& rhs){
 }
 
 void sm::SToken::set_state_names(){
+    if(already_set_state_names) //avoid repeat filling a static var
+        return;
     for(int i = 0; i < MAX_ROWS; i++)
         snames[i] = "UNKNOWN";
-    snames[WORD] = "ALPHA";
-    snames[INT] = "INTEGER";
-    snames[DOUBLE] = "DOUBLE";
-    snames[SPACE] = "SPACE";
-    snames[COMMA] = "COMMA";
+    //Takes a var[] and loops through it while adding in str into a respective array
+    //This keeps track of success state names
+#define s_loop(var, str) for(unsigned int n=0; n<sizeof(var)/sizeof(*var); n++) snames[var[n]] = str
+    s_loop(WORD,"ALPHA");
+    s_loop(INT,"INTEGER");
+    s_loop(DOUBLE,"DOUBLE");
+    s_loop(SPACE,"SPACE");
+    s_loop(COMMA,"COMMA");
+    s_loop(TIME, "TIME");
+    s_loop(PUNC, "PUNCS");
+
+    already_set_state_names = true;
 }
 
 void sm::SToken::set_state(int new_state){
@@ -55,3 +65,10 @@ void sm::SToken::set_state(int new_state){
 void sm::SToken::set_token(const string& str){
     this->_s = str;
 }
+
+string sm::SToken::type_string() const{
+    //ternary operator to guarantee the state put into the array is >0
+    return snames[(state>=0) ? state : 0];
+}
+
+

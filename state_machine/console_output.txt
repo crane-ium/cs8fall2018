@@ -1,0 +1,173 @@
+String:
+Done
+
+String: &
+ UNKNOWN         |&|
+Done
+
+String: <>|~
+ UNKNOWN         |<|
+ UNKNOWN         |>|
+ UNKNOWN         |||
+ UNKNOWN         |~|
+Done
+
+String: 1
+ INTEGER         |1|
+Done
+
+String: -3.1415926
+  DOUBLE         |-3.1415926|
+Done
+
+String: 12,345,6789.0.5
+ INTEGER         |12|
+   PUNCS         |,|
+ INTEGER         |345,678|
+  DOUBLE         |9.0|
+   PUNCS         |.|
+ INTEGER         |5|
+Done
+
+String: 123:50:59, 80:61 12:16am 00:00pm 1:32 1:70pm 13:00 12:12
+ INTEGER         |12|
+    TIME         |3:50|
+ UNKNOWN         |:|
+ INTEGER         |59|
+   PUNCS         |,|
+   SPACE         | |
+ INTEGER         |80|
+ UNKNOWN         |:|
+ INTEGER         |61|
+   SPACE         | |
+    TIME         |12:16am|
+   SPACE         | |
+    TIME         |00:00pm|
+   SPACE         | |
+    TIME         |1:32|
+   SPACE         | |
+ INTEGER         |1|
+ UNKNOWN         |:|
+ INTEGER         |70|
+   ALPHA         |pm|
+   SPACE         | |
+    TIME         |13:00|
+   SPACE         | |
+    TIME         |12:12|
+Done
+
+String: End of test!
+   ALPHA         |End|
+   SPACE         | |
+   ALPHA         |of|
+   SPACE         | |
+   ALPHA         |test|
+   PUNCS         |!|
+Done
+
+Milliseconds to complete stokenizer tasks: 42
+
+ftoken_print is complete
+Alpha Count: 144766
+     ALPHA         |Version|
+     ALPHA         |Barkeshli|
+     ALPHA         |Note|
+     ALPHA         |I|
+     ALPHA         |am|
+     ALPHA         |using|
+     ALPHA         |git|
+     ALPHA         |for|
+     ALPHA         |version|
+     ALPHA         |control|
+     ALPHA         |so|
+     ALPHA         |this|
+     ALPHA         |is|
+     ALPHA         |the|
+     ALPHA         |branch|
+     ALPHA         |for|
+     ALPHA         |my|
+     ALPHA         |class|
+     ALPHA         |submission|
+     ALPHA         |Bugs|
+     ALPHA         |FIXED|
+     ALPHA         |Sometimes|
+     ALPHA         |ignores|
+     ALPHA         |alpha|
+     ALPHA         |type|
+     ALPHA         |tokens|
+     ALPHA         |at|
+     ALPHA         |the|
+     ALPHA         |end|
+     ALPHA         |of|
+     ALPHA         |strings|
+     ALPHA         |Issues|
+     ALPHA         |I|
+     ALPHA         |think|
+     ALPHA         |if|
+     ALPHA         |i|
+     ALPHA         |were|
+     ALPHA         |to|
+     ALPHA         |rewrite|
+     ALPHA         |it|
+     ALPHA         |completely|
+     ALPHA         |it|
+     ALPHA         |COULD|
+     ALPHA         |be|
+     ALPHA         |slightly|
+     ALPHA         |neater|
+     ALPHA         |Would|
+     ALPHA         |rather|
+     ALPHA         |use|
+     ALPHA         |vectors|
+     ALPHA         |for|
+     ALPHA         |the|
+     ALPHA         |table|
+     ALPHA         |I|
+     ALPHA         |think|
+     ALPHA         |i|
+     ALPHA         |did|
+     ALPHA         |certain|
+     ALPHA         |features|
+     ALPHA         |differently|
+     ALPHA         |than|
+     ALPHA         |the|
+     ALPHA         |client|
+     ALPHA         |described|
+     ALPHA         |them|
+     ALPHA         |Only|
+     ALPHA         |because|
+     ALPHA         |i|
+     ALPHA         |made|
+     ALPHA         |them|
+     ALPHA         |better|
+     ALPHA         |I|
+     ALPHA         |should|
+     ALPHA         |have|
+     ALPHA         |better|
+     ALPHA         |try|
+     ALPHA         |catch|
+     ALPHA         |and|
+     ALPHA         |asserts|
+     ALPHA         |in|
+     ALPHA         |my|
+     ALPHA         |program|
+     ALPHA         |The|
+     ALPHA         |state|
+     ALPHA         |machine|
+     ALPHA         |becomes|
+     ALPHA         |exponentially|
+     ALPHA         |hard|
+     ALPHA         |to|
+     ALPHA         |manually|
+     ALPHA         |manage|
+     ALPHA         |when|
+     ALPHA         |growing|
+ftoken_print is complete
+Alpha Count: 93
+ftoken_print is complete
+Alpha Count: 277
+Milliseconds to complete stokenizer tasks: 253
+
+main is complete
+Alpha Count: 144766
+Press <RETURN> to close this window...
