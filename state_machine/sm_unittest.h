@@ -10,7 +10,7 @@ class sm_unittest
 {
 public:
     sm_unittest(){}
-    void run_unittest();
+    void run_unittest(); //runs all the unittests
     void print();
     void set_str(const string& s);
     void ftoken_print(const string& file, bool b);
