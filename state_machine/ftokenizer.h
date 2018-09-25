@@ -10,7 +10,7 @@ namespace sm{
     {
     public:
         //CTORs
-        FTokenizer(){}
+        FTokenizer():cstr(new char[1000]){}
         FTokenizer(const string& file); //add with a file
         //MEMBER FUNCS
         void set_string(const string& file); //change or add file
@@ -26,6 +26,7 @@ namespace sm{
         string block; //The next block string from the file
         ifstream ifile; //file stream
         string ifile_location;
+        char* cstr;
     };
 }
 

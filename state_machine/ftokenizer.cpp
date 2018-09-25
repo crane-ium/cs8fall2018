@@ -2,7 +2,7 @@
 
 #define file_set(f) ifile_location= f; ifile.open(f);
 
-sm::FTokenizer::FTokenizer(const string& file){
+sm::FTokenizer::FTokenizer(const string& file):FTokenizer(){
     file_set(file); //set file location and open file
 }
 
@@ -13,18 +13,32 @@ void sm::FTokenizer::set_string(const string& file){
 }
 
 bool sm::FTokenizer::get_next_token(){
-    string temp = "";
+//    string temp = "";
     if(ifile.is_open()){
-        if(!(ifile >> block))
+        ifile.seekg(0, ifile.end);
+        int ifile_length = ifile.tellg();
+        ifile.seekg(0, ifile.beg);
+//        if(!(ifile >> block))
+//            return false;
+//        temp += block;
+//        while(temp.length() <= BUFFER_MAX){ //create a string until 1000
+//            if(ifile >> block) //read the next block from the file
+//                temp += " " + block;
+//            else
+//                break;
+//        }
+        delete[] cstr;
+        ifile.read(cstr, 1000);
+//        cout << ifile.gcount() << " : " << ifile_length << endl;
+        cout << cstr << endl;
+
+        if(ifile)
+            stizer.set_string(cstr); //set the stokenizer string
+        else{
+//            ifile.read(cstr, ifile.gcount()-10);
+            stizer.set_string(cstr);
             return false;
-        temp += block;
-        while(temp.length() <= BUFFER_MAX){ //create a string until 1000
-            if(ifile >> block) //read the next block from the file
-                temp += " " + block;
-            else
-                break;
         }
-        stizer.set_string(temp); //set the stokenizer string
         return true;
     }else
         return false;
