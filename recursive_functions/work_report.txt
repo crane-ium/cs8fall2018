@@ -1,0 +1,5 @@
+#Issues
+-Poor user-input handling
+-Probably better unittesting :)
+
+#Bugs
