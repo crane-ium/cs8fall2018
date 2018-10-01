@@ -17,6 +17,7 @@ public:
     //MOD MEMBER FUNCTIONS
     void insert(T item=T());
     void delete_node(T item=T());
+    void clear(); //delete the whole tree
     //CONST MEMBER FUNCTIONS
     void print_inorder() const;
     void print() const;
@@ -54,16 +55,16 @@ void bst<T>::print_inorder() const{
 template <class T>
 void bst<T>::print() const{
     _head->tree_print(_head, 0, cout);
-    tree_node<T>* temp = NULL;
-    tree_node<T>* parent = NULL;
-    cout << _head->find_node(6, _head, temp, parent) << endl;
-    if(temp)
-        cout << temp->_item << endl;
 }
 
 template<class T>
 void bst<T>::delete_node(T item){
     _head->delete_node(_head, item);
+}
+
+template<class T>
+void bst<T>::clear(){
+    _head->clear(_head);
 }
 
 #endif // BST_H

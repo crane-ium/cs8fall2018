@@ -20,16 +20,18 @@ int main()
 ////    cout << "NEXT\n";
 //    cout << base << endl;
     bst<int> tree;
+    //preorder insertion
     tree.insert(4);
     tree.insert(2);
-//    tree.insert(1);
-//    tree.insert(3);
+    tree.insert(1);
+    tree.insert(3);
     tree.insert(6);
-//    tree.insert(5);
+    tree.insert(5);
     tree.insert(7);
     tree.print();
-    tree.delete_node(6);
-    cout << "Deleted " << endl;
+    tree.clear();
+    cout << "Cleared, insert 1, then print: " << endl;
+    tree.insert(1);
     tree.print();
     cout << "Done\n";
 }

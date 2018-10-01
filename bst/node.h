@@ -15,15 +15,17 @@ struct tree_node{
     int balance_factor(){
         return 0;
     }
+    //CTOR
     tree_node(T item=T(), tree_node* left=NULL, tree_node* right=NULL):
         _item(item), _left(left), _right(right), _height(0){}
     //MOD MEMBER FUNCTIONS
     void tree_insert(tree_node<T>* &root, const T &item);
-    int height();
-    void update_height();
-    void delete_node(tree_node<T> *&root, T item=T());
+    int height(); //gets height of the current node by propogating thru the children also
+    void update_height(); //updates the height of the chosen node
+    void delete_node(tree_node<T> *&root, T item=T()); //deletes a specific node based on item
     tree_node<T>* get_largest_node(tree_node<T>* root, tree_node<T> *&parent);
-    bool find_node(T item, tree_node<T> *root, tree_node<T>* &node, tree_node<T> *&parent);
+    bool find_node(T item, tree_node<T> *&root, tree_node<T> **&node);
+    void clear(tree_node<T>* &root); //deletes the root and all children
     //CONST MEMBER FUNCS
     void tree_print_inorder(tree_node<T>* root, int level, ostream& outs=cout) const;
     void tree_print(tree_node<T>* root, int level, ostream& outs=cout) const;
@@ -95,55 +97,50 @@ void tree_node<T>::update_height(){
 
 template <class T>
 void tree_node<T>::delete_node(tree_node<T>* &root, T item){
-    tree_node<T>* node = NULL;
-    tree_node<T>* parent_of_target = NULL;
-    if(!find_node(item, root, node, parent_of_target))
+    tree_node<T>** node = NULL;
+    if(!find_node(item, root, node))
         return;
     else{
         tree_node<T>* largest = NULL;
         tree_node<T>* parent = NULL;
-        largest = get_largest_node(node->_left, parent);
+        largest = get_largest_node((*node)->_left, parent);
         if(largest){
             //Then there is a node to the left
             if(parent){
                 //Then there was a parent of the left node that is not this
                 parent->_right = NULL;
             }else
-                node->_left = NULL; //else the largest node was the left child
-            node->_item = largest->_item;
+                (*node)->_left = NULL; //else the largest node was the left child
+            (*node)->_item = largest->_item;
             delete largest;
         }else{
-            //There was no largest, so instead combine the right tree
-            if(node->_right){
-                tree_node<T>* temp = NULL;
-                temp = node->_right;
-                node->_item = node->_right->_item;
-                node->_right = node->_right->_right;
+            if((*node)->_right){
+                //There was no largest, so instead combine the right tree
+                (*node)->_item = (*node)->_right->_item;
+                (*node)->_right = (*node)->_right->_right;
             }else{
                 //There's no node to the right so just set node to null and delete
-                tree_node<T>* temp = node;
-
+                tree_node<T>* temp = (*node);
+                (*node) = NULL;
+                delete temp;
             }
         }
         root->update_height();
     }
-
 }
 
 template<class T>
-bool tree_node<T>::find_node(T item, tree_node<T>* root, tree_node<T>* &node, tree_node<T>* &parent){
+bool tree_node<T>::find_node(T item, tree_node<T>* &root, tree_node<T>** &node){
     if(!root)
         return false;
     if(root->_item == item){
-        node = root; //returns the node back to the base call
+        node = &root; //returns the node back to the base call
         return true;
     }
     if(root->_item < item){
-        parent = root;
-        return find_node(item, root->_right, node, parent);
+        return find_node(item, root->_right, node);
     }else{
-        parent = root;
-        return find_node(item, root->_left, node, parent);
+        return find_node(item, root->_left, node);
     }
 }
 
@@ -157,6 +154,17 @@ tree_node<T>* tree_node<T>::get_largest_node(tree_node<T> *root, tree_node<T>* &
     }else{
         return root;
     }
+}
+
+template <class T>
+void tree_node<T>::clear(tree_node<T> *&root){
+    if(!root)
+        return;
+    clear(root->_left);
+    clear(root->_right);
+    tree_node<T>* temp = root;
+    root = NULL;
+    delete temp;
 }
 
 #endif // TREENODE_H
