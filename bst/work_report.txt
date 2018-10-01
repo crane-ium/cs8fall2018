@@ -1,0 +1,6 @@
+Issues:
+tree_node<T>::height() is of O(n) time and I would like to reduce to O(logn) of time at least
+
+
+Notes:
+I double check no mem leak
