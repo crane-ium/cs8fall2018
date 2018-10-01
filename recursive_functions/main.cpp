@@ -4,7 +4,6 @@
  *
  * Below are projects from Data Structures and Other Objects
  *  from end of chapter 9 pg 470
- *
  * */
 #include <iostream>
 #include <iomanip>
