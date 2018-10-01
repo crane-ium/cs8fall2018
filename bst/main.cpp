@@ -29,9 +29,12 @@ int main()
     tree.insert(5);
     tree.insert(7);
     tree.print();
+    cout << "Balance factor of head: " << tree.balance() << endl;
     tree.clear();
-    cout << "Cleared, insert 1, then print: " << endl;
+    cout << "Cleared, insert 1,2, then print: " << endl;
     tree.insert(1);
+    tree.insert(2);
     tree.print();
+    cout << "Balance factor now: " << tree.balance() << endl;
     cout << "Done\n";
 }

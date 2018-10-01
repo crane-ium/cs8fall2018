@@ -21,6 +21,7 @@ public:
     //CONST MEMBER FUNCTIONS
     void print_inorder() const;
     void print() const;
+    int balance() const; //balance factor of head
 private:
     tree_node<T>* _head;
     void delete_node(const tree_node<T> *root, T item=T()); //deletes a specific node and reorganizes tree appropriately
@@ -65,6 +66,11 @@ void bst<T>::delete_node(T item){
 template<class T>
 void bst<T>::clear(){
     _head->clear(_head);
+}
+
+template<class T>
+int bst<T>::balance() const{
+    return _head->balance_factor();
 }
 
 #endif // BST_H

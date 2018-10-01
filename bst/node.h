@@ -12,9 +12,6 @@ struct tree_node{
     tree_node<T>* _left;
     tree_node<T>* _right;
     unsigned int _height;
-    int balance_factor(){
-        return 0;
-    }
     //CTOR
     tree_node(T item=T(), tree_node* left=NULL, tree_node* right=NULL):
         _item(item), _left(left), _right(right), _height(0){}
@@ -29,6 +26,7 @@ struct tree_node{
     //CONST MEMBER FUNCS
     void tree_print_inorder(tree_node<T>* root, int level, ostream& outs=cout) const;
     void tree_print(tree_node<T>* root, int level, ostream& outs=cout) const;
+    int balance_factor() const;
     //FRIEND FUNCS
     friend ostream& operator <<(ostream& outs, tree_node<T>*& node){
         node->tree_print(node, 0, outs);
@@ -162,9 +160,15 @@ void tree_node<T>::clear(tree_node<T> *&root){
         return;
     clear(root->_left);
     clear(root->_right);
-    tree_node<T>* temp = root;
-    root = NULL;
-    delete temp;
+    tree_node<T>** temp = &root;
+    delete root;
+    (*temp) = NULL;
+}
+
+template<class T>
+int tree_node<T>::balance_factor() const{
+    //Checks whether to use the _height or -1 if _left or _right DNE
+    return ((_left)?(_left->_height):(-1)) - ((_right)?(_right->_height):(-1));
 }
 
 #endif // TREENODE_H
