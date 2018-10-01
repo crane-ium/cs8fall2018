@@ -2,92 +2,68 @@
 #define BST_H
 
 #include <iostream>
-#include <cassert>
+#include "node.h"
 
 using namespace std;
 
 template <class T>
-struct tree_node{
-    T _item;
-    tree_node<T>* _left;
-    tree_node<T>* _right;
-    unsigned int _height;
-    int balance_factor(){
-        return 0;
-    }
-
-    tree_node(T item=T(), tree_node* left=NULL, tree_node* right=NULL):
-        _item(item), _left(left), _right(right), _height(0){}
+class bst{
+public:
+    bst():_head(NULL){}
+    //BIG 3
+    ~bst();
+    bst(const bst& copy);
+    bst& operator =(const bst& rhs);
     //MOD MEMBER FUNCTIONS
-    void tree_insert(tree_node<T>* &root, const T &item);
-    int height();
-    void update_height();
-    //CONST MEMBER FUNCS
-    void tree_print_inorder(tree_node<T>* root, int level, ostream& outs=cout) const;
-    void tree_print(tree_node<T>* root, int level, ostream& outs=cout) const;
-    //FRIEND FUNCS
-    friend ostream& operator <<(ostream& outs, tree_node<T>*& node){
-        node->tree_print(node, 0, outs);
-        return outs;
-    }
+    void insert(T item=T());
+    void delete_node(T item=T());
+    //CONST MEMBER FUNCTIONS
+    void print_inorder() const;
+    void print() const;
+private:
+    tree_node<T>* _head;
+    void delete_node(const tree_node<T> *root, T item=T()); //deletes a specific node and reorganizes tree appropriately
+
 };
 
 template<class T>
-void tree_node<T>::tree_insert(tree_node<T>* &root, const T& item){
-    //NOTE: changed const T& item to T item
+bst<T>::~bst(){
 
-    //just starting with a basic in-order cout
-    if(!root){
-        root = new tree_node(item);
-    }else if(item < root->_item){
-        tree_insert(root->_left, item);
-    }else if(item > root->_item){
-        tree_insert(root->_right, item);
-    }
-    if(item == root->_item)
-        return;
-    assert(item != root->_item); //quick check
-    root->update_height();
 }
 
 template<class T>
-void tree_node<T>::tree_print_inorder(tree_node<T> *root, int level, ostream &outs) const{
-    if(!root)
-        return;
-    tree_print_inorder(root->_left, level+1, outs);
-    outs << setw(level) << "";
-    outs << root->_item << ": " << root->_height << endl;
-    tree_print_inorder(root->_right, level+1, outs);
+bst<T>::bst(const bst& copy){
+
+}
+
+template <class T>
+bst<T>& bst<T>::operator =(const bst& rhs){
+
 }
 
 template<class T>
-void tree_node<T>::tree_print(tree_node<T> *root, int level, ostream &outs) const{
-    if(!root)
-        return;
-    tree_print(root->_right, level+1, outs);
-    for(int i = 0; i < level; i++)
-        outs << "---- ";
-    outs << root->_item << ": " << root->_height << endl;
-    tree_print(root->_left, level+1, outs);
+void bst<T>::insert(T item){
+    _head->tree_insert(_head, item);
 }
 
 template<class T>
-int tree_node<T>::height(){
-    //set the height of the node
-    if(_right && _left)
-        this->_height = (_right->_height > _left->_height)?(_right->_height + 1):(_left->_height + 1);
-    else if(_right)
-        _height = _right->_height + 1;
-    else if(_left)
-        _height = _left->_height + 1;
-    else
-        _height = 0;
-    return _height;
+void bst<T>::print_inorder() const{
+    _head->tree_print_inorder(_head, 0, cout);
+}
+
+template <class T>
+void bst<T>::print() const{
+    _head->tree_print(_head, 0, cout);
+    tree_node<T>* temp = NULL;
+    tree_node<T>* parent = NULL;
+    cout << _head->find_node(6, _head, temp, parent) << endl;
+    if(temp)
+        cout << temp->_item << endl;
 }
 
 template<class T>
-void tree_node<T>::update_height(){
-    this->_height = height();
+void bst<T>::delete_node(T item){
+    _head->delete_node(_head, item);
 }
 
 #endif // BST_H
