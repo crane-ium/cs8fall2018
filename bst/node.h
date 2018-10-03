@@ -16,7 +16,7 @@ struct tree_node{
     tree_node(T item=T(), tree_node* left=NULL, tree_node* right=NULL):
         _item(item), _left(left), _right(right), _height(0){}
     //MOD MEMBER FUNCTIONS
-    void tree_insert(tree_node<T>* &root, const T &item);
+    void tree_insert(tree_node<T>* &root, const T &item); //inserts by comparing the node's items
     int height(); //gets height of the current node by propogating thru the children also
     void update_height(); //updates the height of the chosen node
     void delete_node(tree_node<T> *&root, T item=T()); //deletes a specific node based on item
@@ -28,6 +28,8 @@ struct tree_node{
     void tree_print(tree_node<T>* root, int level, ostream& outs=cout) const;
     int balance_factor() const;
     //FRIEND FUNCS
+    template<class U>
+    friend void tree_copy(tree_node<U>* copy_root, tree_node<U> *&main_root);
     friend ostream& operator <<(ostream& outs, tree_node<T>*& node){
         node->tree_print(node, 0, outs);
         return outs;
@@ -36,8 +38,6 @@ struct tree_node{
 
 template<class T>
 void tree_node<T>::tree_insert(tree_node<T>* &root, const T& item){
-    //NOTE: changed const T& item to T item
-
     //just starting with a basic in-order cout
     if(!root){
         root = new tree_node(item);
@@ -144,6 +144,7 @@ bool tree_node<T>::find_node(T item, tree_node<T>* &root, tree_node<T>** &node){
 
 template<class T>
 tree_node<T>* tree_node<T>::get_largest_node(tree_node<T> *root, tree_node<T>* &parent){
+    //returns pointer to node with the largest node in that tree.
     if(root == NULL)
         return NULL; //this would be bad, btw
     if(root->_right != NULL){
@@ -156,6 +157,7 @@ tree_node<T>* tree_node<T>::get_largest_node(tree_node<T> *root, tree_node<T>* &
 
 template <class T>
 void tree_node<T>::clear(tree_node<T> *&root){
+    //deletes in post-order
     if(!root)
         return;
     clear(root->_left);
@@ -169,6 +171,18 @@ template<class T>
 int tree_node<T>::balance_factor() const{
     //Checks whether to use the _height or -1 if _left or _right DNE
     return ((_left)?(_left->_height):(-1)) - ((_right)?(_right->_height):(-1));
+}
+
+template<class T>
+void tree_copy(tree_node<T>* copy_root, tree_node<T> *& main_root){
+    if(!copy_root)
+        return;
+    //Preorder traversal while inserting into main_root
+    tree_node<T>* temp = new tree_node<T>(copy_root->_item);
+    main_root = temp;
+    main_root->_height = copy_root->_height;
+    tree_copy(copy_root->_left, main_root->_left);
+    tree_copy(copy_root->_right, main_root->_right);
 }
 
 #endif // TREENODE_H

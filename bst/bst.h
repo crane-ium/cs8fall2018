@@ -12,7 +12,7 @@ public:
     bst():_head(NULL){}
     //BIG 3
     ~bst();
-    bst(const bst& copy);
+    bst(const bst& other);
     bst& operator =(const bst& rhs);
     //MOD MEMBER FUNCTIONS
     void insert(T item=T());
@@ -30,17 +30,22 @@ private:
 
 template<class T>
 bst<T>::~bst(){
-
+    _head->clear(_head);
 }
 
 template<class T>
-bst<T>::bst(const bst& copy){
-
+bst<T>::bst(const bst& other){
+    //Copy the other's tree
+    if(this==&other)
+        return;
+    tree_copy(other._head, this->_head); //call friend function
 }
 
 template <class T>
 bst<T>& bst<T>::operator =(const bst& rhs){
-
+    if(this==&rhs)
+        return *this;
+    tree_copy(rhs._head, this->_head);
 }
 
 template<class T>
@@ -55,7 +60,9 @@ void bst<T>::print_inorder() const{
 
 template <class T>
 void bst<T>::print() const{
+    cout << "~~~~~~Tree in sideways view~~~~~~\n";
     _head->tree_print(_head, 0, cout);
+    cout << "Done printing\n";
 }
 
 template<class T>
