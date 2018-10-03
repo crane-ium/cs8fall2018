@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cassert>
+#include <math.h>
 
 using namespace std;
 
@@ -91,6 +92,15 @@ int tree_node<T>::height(){
 template<class T>
 void tree_node<T>::update_height(){
     this->_height = height();
+    if(balance_factor() == 2){
+        //right heavy
+        if(abs(_right->balance_factor()) != 2)
+            cout << "Node " << this->_item << " is the base\n";
+    }else if(balance_factor() == -2){
+        //left heavy
+        if(abs(_left->balance_factor()) != 2)
+            cout << "Node " << this->_item << " is the base\n";
+    }
 }
 
 template <class T>
@@ -170,7 +180,7 @@ void tree_node<T>::clear(tree_node<T> *&root){
 template<class T>
 int tree_node<T>::balance_factor() const{
     //Checks whether to use the _height or -1 if _left or _right DNE
-    return ((_left)?(_left->_height):(-1)) - ((_right)?(_right->_height):(-1));
+    return ((_right)?(_right->_height):(-1)) - ((_left)?(_left->_height):(-1));
 }
 
 template<class T>
