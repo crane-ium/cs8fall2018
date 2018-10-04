@@ -31,8 +31,8 @@ int main()
 
     bst<int> tree2;
     tree2 = tree; //copy the tree
-    tree.insert(10);
     tree.insert(11);
+    tree.insert(10);
 
     tree.print();
     tree2.print();

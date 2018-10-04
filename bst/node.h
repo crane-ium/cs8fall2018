@@ -24,6 +24,10 @@ struct tree_node{
     tree_node<T>* get_largest_node(tree_node<T>* root, tree_node<T> *&parent);
     bool find_node(T item, tree_node<T> *&root, tree_node<T> **&node);
     void clear(tree_node<T>* &root); //deletes the root and all children
+    //Rotation Functions:
+    tree_node<T>* rotate_right(tree_node<T>* &root);
+    tree_node<T>* rotate_left(tree_node<T>* &root);
+    tree_node<T>* rotate(tree_node<T>* &root);
     //CONST MEMBER FUNCS
     void tree_print_inorder(tree_node<T>* root, int level, ostream& outs=cout) const;
     void tree_print(tree_node<T>* root, int level, ostream& outs=cout) const;
@@ -193,6 +197,31 @@ void tree_copy(tree_node<T>* copy_root, tree_node<T> *& main_root){
     main_root->_height = copy_root->_height;
     tree_copy(copy_root->_left, main_root->_left);
     tree_copy(copy_root->_right, main_root->_right);
+}
+
+//-----ROTATION FUNCS----
+template<class T>
+tree_node<T>* tree_node<T>::rotate_right(tree_node<T>* &root){
+    //We need to check the two possible rotations:
+    assert(root->_left->balance_factor() != 0);
+    //Left-Right rotation
+    if(root->_left->balance_factor() > 0){
+
+    }
+    //Left-Left rotation
+    if(root->_left->balance_factor() < 0){
+
+    }
+}
+
+template<class T>
+tree_node<T>* tree_node<T>::rotate_left(tree_node<T>* &root){
+
+}
+
+template<class T>
+tree_node<T>* tree_node<T>::rotate(tree_node<T>* &root){
+    //I DON'T SEE THIS AS NECESSARY WITH MY SETUP
 }
 
 #endif // TREENODE_H
