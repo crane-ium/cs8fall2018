@@ -19,7 +19,7 @@ struct tree_node{
     //MOD MEMBER FUNCTIONS
     void tree_insert(tree_node<T>* &root, const T &item); //inserts by comparing the node's items
     int height(); //gets height of the current node by propogating thru the children also
-    void update_height(); //updates the height of the chosen node
+    void update_height(tree_node<T> *&node); //updates the height of the chosen node
     void delete_node(tree_node<T> *&root, T item=T()); //deletes a specific node based on item
     tree_node<T>* get_largest_node(tree_node<T>* root, tree_node<T> *&parent);
     bool find_node(T item, tree_node<T> *&root, tree_node<T> **&node);
@@ -54,7 +54,7 @@ void tree_node<T>::tree_insert(tree_node<T>* &root, const T& item){
     if(item == root->_item)
         return;
     assert(item != root->_item); //quick check
-    root->update_height();
+    root->update_height(root);
 }
 
 template<class T>
@@ -94,17 +94,34 @@ int tree_node<T>::height(){
 }
 
 template<class T>
-void tree_node<T>::update_height(){
+void tree_node<T>::update_height(tree_node<T>* &node){
     this->_height = height();
     if(balance_factor() == 2){
         //right heavy
-        if(abs(_right->balance_factor()) != 2)
+        if(abs(_right->balance_factor()) != 2){
             cout << "Node " << this->_item << " is the base\n";
+//            if(_right->balance_factor() > 0){ //right-right
+//                this->rotate_left(*this);
+//            }else if(_right->balance_factor() < 0){ //right-left
+//                this->rotate_left(*this);
+//            }
+            this->rotate_left(node);
+//            node->update_height(node); //This should not make an infinite loop.
+        }
     }else if(balance_factor() == -2){
         //left heavy
-        if(abs(_left->balance_factor()) != 2)
+        if(abs(_left->balance_factor()) != 2){
             cout << "Node " << this->_item << " is the base\n";
-    }
+//            if(_left->balance_factor() > 0){ //right-right
+//                this->rotate_right(*this);
+//            }else if(_left->balance_factor() < 0){ //right-left
+//                this->rotate_right(*this);
+//            }
+            this->rotate_right(node);
+            node->update_height(node); //This should not make an infinite loop.
+        }
+    }else
+        return;
 }
 
 template <class T>
@@ -137,7 +154,7 @@ void tree_node<T>::delete_node(tree_node<T>* &root, T item){
                 delete temp;
             }
         }
-        root->update_height();
+        root->update_height(root);
     }
 }
 
@@ -176,9 +193,10 @@ void tree_node<T>::clear(tree_node<T> *&root){
         return;
     clear(root->_left);
     clear(root->_right);
-    tree_node<T>** temp = &root;
     delete root;
-    (*temp) = NULL;
+//    cout << "Deleted " << root->_item << endl;
+    root = NULL;
+
 }
 
 template<class T>
@@ -203,20 +221,52 @@ void tree_copy(tree_node<T>* copy_root, tree_node<T> *& main_root){
 template<class T>
 tree_node<T>* tree_node<T>::rotate_right(tree_node<T>* &root){
     //We need to check the two possible rotations:
-    assert(root->_left->balance_factor() != 0);
     //Left-Right rotation
     if(root->_left->balance_factor() > 0){
-
-    }
-    //Left-Left rotation
-    if(root->_left->balance_factor() < 0){
-
+        cout << "Rotate right: left-right\n";
+        root = root->_left->_right;
+        if(root->_left)
+            this->_left->_right = root->_left;
+        else
+            this->_left->_right = NULL;
+        root->_left = this->_left;
+        this->_left = NULL;
+        if(root->_right){
+            this->_left = root->_right;
+        }
+        root->_right = this;
+    }else if(root->_left->balance_factor() < 0){
+        //Left-Left rotation
+        cout << "Rotate right: left-left\n";
+        root = root->_left;
+        this->_left = root->_right;
+        root->_right = this;
     }
 }
 
 template<class T>
 tree_node<T>* tree_node<T>::rotate_left(tree_node<T>* &root){
-
+    //Right-Right rotation
+    if(root->_right->balance_factor() > 0){
+        cout << "Rotate left: right-right\n";
+        root = root->_right;
+        this->_right = root->_left;
+        root->_left = this;
+    }else if(root->_right->balance_factor() < 0){
+        //Right-Left rotation
+        cout << "Rotate left: right-left\n";\
+        root = root->_right->_left;
+        if(root->_right)
+            this->_right->_left = root->_right;
+        else
+            this->_right->_left = NULL;
+        root->_right = this->_right;
+        this->_right = NULL;
+        if(root->_left){
+            this->_right = root->_left;
+        }
+        root->_left = this;
+    }
 }
 
 template<class T>
