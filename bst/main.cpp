@@ -42,5 +42,24 @@ int main()
     tree2 += tree;
     cout << "Final tree 2 (Tree 2 += Tree 1)\n";
     cout << tree2 << endl;
+
+    cout << "Search for 25: ";
+    tree_node<int>* found_25 = NULL;
+    if(tree2.search(25, found_25))
+        cout << "FOUND!\n";
+    else cout << "NOT FOUND!\n";
+
+    cout << "Search for 95: ";
+    tree_node<int>* found_95 = NULL;
+    if(tree2.search(95, found_95))
+        cout << "FOUND!\n";
+    else cout << "NOT FOUND!\n";
+
+    tree2.clear();
+    cout << "\nPrint cleared tree2\n";
+    tree2.print();
+    tree2 = tree;
+    cout << "\nPrint tree2 that copied tree1!\n" << tree2 << endl;
+
     cout << "Done\n";
 }

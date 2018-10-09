@@ -22,7 +22,8 @@ struct tree_node{
     void update_height(tree_node<T> *&node); //updates the height of the chosen node
     void delete_node(tree_node<T> *&root, T item=T()); //deletes a specific node based on item
     tree_node<T>* get_largest_node(tree_node<T>* root, tree_node<T> *&parent);
-    bool find_node(T item, tree_node<T> *&root, tree_node<T> **&node);
+    bool find_node(const T& item, tree_node<T>* &root);
+    bool find_node(const T& item, tree_node<T> *&root, tree_node<T> **&node);
     void clear(tree_node<T>* &root); //deletes the root and all children
     //Rotation Functions:
     tree_node<T>* rotate_right(tree_node<T>* &root);
@@ -116,7 +117,7 @@ void tree_node<T>::update_height(tree_node<T>* &node){
         return;
 }
 
-template <class T>
+template <class T> //uhh i think i had a brainfart when i made this. It still works well tho
 void tree_node<T>::delete_node(tree_node<T>* &root, T item){
     tree_node<T>** node = NULL;
     if(!find_node(item, root, node))
@@ -149,9 +150,19 @@ void tree_node<T>::delete_node(tree_node<T>* &root, T item){
         root->update_height(root);
     }
 }
-
 template<class T>
-bool tree_node<T>::find_node(T item, tree_node<T>* &root, tree_node<T>** &node){
+bool tree_node<T>::find_node(const T &item, tree_node<T> *&root){
+    if(this->_item == item){
+        root = this;
+        return true;
+    }else if(this->_left && item <this->_item){
+        this->_left->find_node(item, root);
+    }else if(this->_right && item > this->_item){
+        this->_right->find_node(item,root);
+    }else return false;
+}
+template<class T>
+bool tree_node<T>::find_node(const T& item, tree_node<T>* &root, tree_node<T>** &node){
     if(!root)
         return false;
     if(root->_item == item){

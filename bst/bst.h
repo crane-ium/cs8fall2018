@@ -15,24 +15,27 @@ public:
     avl(const avl& other);
     avl& operator =(const avl& rhs);
     //MOD MEMBER FUNCTIONS
-    void insert(T item=T());
-    void erase(const T &item);
+    void insert(T item=T()); //insert item of type T
+    void erase(const T &item); //delete item if it exists
     void clear(); //delete the whole tree
+    bool search(const T &item); //search without returning ptr
+    bool search(const T& item, tree_node<T>* &ptr);
     avl<T>& operator +=(const avl<T> &rhs); //concatenate two trees
     //CONST MEMBER FUNCTIONS
-    void print_inorder() const;
+    void print_inorder() const; //Prints downwards and inorder
     void print() const; //Basic sideways print of tree with labels
-    int get_size() const;
+    int get_size() const; //Would return the number of nodes in avl tree. Doesn't work atm
     //FRIEND FUNCTIONS
     template<class U>
     friend ostream& operator << (ostream& outs, const avl<U> &tree);//sideways output
     template<class U> //Puts a tree consisting from node, into an array arr
     friend void tree_to_array(U* &arr, size_t &index, const tree_node<U>* node);
 private:
-    size_t _size;
-    tree_node<T>* _head;
+    size_t _size; //not functional atm
+    tree_node<T>* _head; //Tree
 };
 
+//a_merge: array function that merges two sorted arrays
 template<class T>
 T* a_merge(T* arr1, T* arr2, const size_t s_a1, const size_t s_a2);
 
@@ -83,6 +86,20 @@ void avl<T>::erase(const T& item){
 template<class T>
 void avl<T>::clear(){
     _head->clear(_head);
+}
+
+template<class T>
+bool avl<T>::search(const T &item){
+    tree_node<T>* blank;
+    if(!_head) //check that there is a head
+        return false;
+    return _head->find_node(item,blank);
+}
+template<class T>
+bool avl<T>::search(const T &item, tree_node<T> *&ptr){
+    if(!_head)
+        return false;
+    return _head->find_node(item, ptr);
 }
 
 template<class T>
@@ -139,7 +156,7 @@ void tree_to_array(T* &arr, size_t &index, const tree_node<T>* node){
     if(node->_left)
         tree_to_array(arr, index, node->_left);
     arr[index] = node->_item;
-    index++; //if size of arr is 5, index will return to be 5
+    index++; //e.g. if size of arr is 5, index will return to be 5
     if(node->_right)
         tree_to_array(arr, index, node->_right);
 }
@@ -147,11 +164,10 @@ void tree_to_array(T* &arr, size_t &index, const tree_node<T>* node){
 template<class T>
 T* a_merge(T* arr1, T* arr2, const size_t s_a1, const size_t s_a2){
 //    cout << __FUNCTION__ << "s_a1: "<<s_a1<<" s_a2: "<<s_a2<< endl;
-    T* mrg = new T[s_a1 + s_a2 + 1];
-
+    T* mrg = new T[s_a1 + s_a2 + 1]; //allocate new space for the merged array
     size_t n1 = 0, n2 = 0;
     for(int i = 0; i < s_a1 + s_a2; i++){
-        if(n1 < s_a1 && n2 < s_a2){
+        if(n1 < s_a1 && n2 < s_a2){ //Keep checking it's within the boundaries of each array
             if(arr1[n1] < arr2[n2]){
                 mrg[i] = arr1[n1];
                 n1++;

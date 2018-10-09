@@ -1,7 +1,9 @@
 Issues:
-Currently a mem leak issue in merge
+Some redundant functions
 tree_node<T>::height() is of O(n) time and I would like to reduce to O(logn) of time at least
-
+Could be more efficient overall too
+No user-menu as described. Ran out of time
 
 Notes:
 I double check no mem leak. Later note: Just kidding
+Ok, mem leak fixed. It was not allocating enough memory for an array
