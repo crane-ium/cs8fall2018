@@ -1,6 +1,7 @@
 Issues:
+Currently a mem leak issue in merge
 tree_node<T>::height() is of O(n) time and I would like to reduce to O(logn) of time at least
 
 
 Notes:
-I double check no mem leak
+I double check no mem leak. Later note: Just kidding

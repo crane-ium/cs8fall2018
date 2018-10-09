@@ -4,45 +4,43 @@
 #include <random>
 #include <time.h>
 #include "bst.h"
+#include <crtdbg.h>
 
 using namespace std;
 
 int main()
 {
-    bst<int> tree;
-    srand(time(NULL));
-    //generate random trees over and over
-    for(int i = 0; i < 100; i++){
-        int rng = rand() % 100;
-        tree.insert(rng);
-    }
-    tree.print_inorder();
+    int tmp;
+    tmp = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
+    tmp = (tmp & 0x0000FFFF) | _CRTDBG_CHECK_EVERY_16_DF;
+    _CrtSetDbgFlag(tmp);
 
-//    bst<int> tree;
-//    int items[13] = {42, 13, 80, 9, 28, 77, 84, 54, 78, 89, 66, 5, 2};
-//    for(int i = 0; i < sizeof(items)/sizeof(items[0])-0; i++){
-//        cout << "Inserting " << items[i]<<endl;
-//        tree.insert(items[i]);
-//    }
-////    tree.insert(66);
-//////    tree.insert(30);
-//////    tree.insert(29);
-//////    tree.insert(31);
-////    tree.insert(5);
-////    tree.insert(30);
-////    tree.insert(2);
-//    tree.print();
-//    tree.insert(10);
-//    tree.print();
-//    tree.insert(30);
-//    tree.print();
-//    bst<int> tree2;
-//    tree.clear();
-//    int itemss[5] = {10, 5, 15, 4, 3};
-//    for(int i = 0; i < sizeof(itemss)/sizeof(itemss[0]); i++){
-//        cout << "Inserting " << itemss[i]<<endl;
-//        tree.insert(itemss[i]);
-//    }
-//    tree.print();
+    avl<int> tree;
+    int items[13] = {42, 13, 80, 9, 28, 77, 84, 54, 78, 89, 66, 5, 2};
+    for(int i = sizeof(items)/sizeof(items[0])-1; i >= 0; i--){
+        //running it in reverse to show that it inserts properly as an AVL
+        cout << "Inserting " << items[i]<<endl;
+        tree.insert(items[i]);
+    }
+    tree.erase(13);
+    tree.erase(50);
+    tree.insert(23);
+    tree.insert(18);
+    tree.insert(17);
+    tree.insert(15); //Test that the merge can handle duplicates
+    tree.insert(10);
+    tree.insert(25);
+    cout << "Tree 1 in sideways view!\n";
+    cout << tree << endl;
+    avl<int> tree2;
+    tree2.insert(15);
+    tree2.insert(20);
+    tree2.insert(25);
+    tree2.print();
+
+    cout << "\nConcatenate: \n";
+    tree2 += tree;
+    cout << "Final tree 2 (Tree 2 += Tree 1)\n";
+    cout << tree2 << endl;
     cout << "Done\n";
 }

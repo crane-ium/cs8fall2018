@@ -30,7 +30,7 @@ struct tree_node{
     tree_node<T>* rotate(tree_node<T>* &root);
     //CONST MEMBER FUNCS
     void tree_print_inorder(tree_node<T>* root, int level, ostream& outs=cout) const;
-    void tree_print(tree_node<T>* root, int level, ostream& outs=cout) const;
+    void tree_print(tree_node<T>* root, int level, ostream& outs=cout,  const bool &show_h=false) const;
     int balance_factor() const;
     //FRIEND FUNCS
     template<class U>
@@ -68,14 +68,17 @@ void tree_node<T>::tree_print_inorder(tree_node<T> *root, int level, ostream &ou
 }
 
 template<class T>
-void tree_node<T>::tree_print(tree_node<T> *root, int level, ostream &outs) const{
+void tree_node<T>::tree_print(tree_node<T> *root, int level, ostream &outs, const bool &show_h) const{
     if(!root)
         return;
-    tree_print(root->_right, level+1, outs);
+    tree_print(root->_right, level+1, outs, show_h);
     for(int i = 0; i < level; i++)
         outs << "---- ";
-    outs << root->_item << ": " << root->_height << endl;
-    tree_print(root->_left, level+1, outs);
+    outs << "["<< root->_item << "] ";
+    if(show_h)
+        outs << "H: " << root->_height;
+    outs << endl;
+    tree_print(root->_left, level+1, outs, show_h);
 }
 
 template<class T>
@@ -99,24 +102,13 @@ void tree_node<T>::update_height(tree_node<T>* &node){
     if(balance_factor() == 2){
         //right heavy
         if(abs(_right->balance_factor()) != 2){
-            cout << "Node " << this->_item << " is the base\n";
-//            if(_right->balance_factor() > 0){ //right-right
-//                this->rotate_left(*this);
-//            }else if(_right->balance_factor() < 0){ //right-left
-//                this->rotate_left(*this);
-//            }
             this->rotate_left(node);
-//            node->update_height(node); //This should not make an infinite loop.
+            node->update_height(node); //This should not make an infinite loop.
         }
     }else if(balance_factor() == -2){
         //left heavy
         if(abs(_left->balance_factor()) != 2){
-            cout << "Node " << this->_item << " is the base\n";
-//            if(_left->balance_factor() > 0){ //right-right
-//                this->rotate_right(*this);
-//            }else if(_left->balance_factor() < 0){ //right-left
-//                this->rotate_right(*this);
-//            }
+//            cout << "Node " << this->_item << " is the base\n";
             this->rotate_right(node);
             node->update_height(node); //This should not make an infinite loop.
         }
@@ -223,7 +215,7 @@ tree_node<T>* tree_node<T>::rotate_right(tree_node<T>* &root){
     //We need to check the two possible rotations:
     //Left-Right rotation
     if(root->_left->balance_factor() > 0){
-        cout << "Rotate right: left-right\n";
+//        cout << "Rotate right: left-right\n";
         root = root->_left->_right;
         if(root->_left)
             this->_left->_right = root->_left;
@@ -237,7 +229,7 @@ tree_node<T>* tree_node<T>::rotate_right(tree_node<T>* &root){
         root->_right = this;
     }else if(root->_left->balance_factor() < 0){
         //Left-Left rotation
-        cout << "Rotate right: left-left\n";
+//        cout << "Rotate right: left-left\n";
         root = root->_left;
         this->_left = root->_right;
         root->_right = this;
@@ -248,13 +240,13 @@ template<class T>
 tree_node<T>* tree_node<T>::rotate_left(tree_node<T>* &root){
     //Right-Right rotation
     if(root->_right->balance_factor() > 0){
-        cout << "Rotate left: right-right\n";
+//        cout << "Rotate left: right-right\n";
         root = root->_right;
         this->_right = root->_left;
         root->_left = this;
     }else if(root->_right->balance_factor() < 0){
         //Right-Left rotation
-        cout << "Rotate left: right-left\n";\
+//        cout << "Rotate left: right-left\n";
         root = root->_right->_left;
         if(root->_right)
             this->_right->_left = root->_right;
