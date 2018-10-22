@@ -16,7 +16,7 @@ public:
     avl& operator =(const avl& rhs);
     //MOD MEMBER FUNCTIONS
     void insert(T item=T()); //insert item of type T
-    void erase(const T &item); //delete item if it exists
+    bool erase(const T &item); //delete item if it exists
     void clear(); //delete the whole tree
     bool search(const T &item); //search without returning ptr
     bool search(const T& item, tree_node<T>* &ptr);
@@ -60,6 +60,7 @@ avl<T>& avl<T>::operator =(const avl& rhs){
         return *this;
     tree_copy(rhs._head, this->_head);
     this->_size = rhs._size;
+    return(*this);
 }
 
 template<class T>
@@ -85,8 +86,8 @@ void avl<T>::print() const{
 }
 
 template<class T>
-void avl<T>::erase(const T& item){
-    _head->delete_node(_head, item);
+bool avl<T>::erase(const T& item){
+    return _head->delete_node(_head, item);
 }
 
 template<class T>
@@ -172,7 +173,7 @@ T* a_merge(T* arr1, T* arr2, const size_t s_a1, const size_t s_a2){
 //    cout << __FUNCTION__ << "s_a1: "<<s_a1<<" s_a2: "<<s_a2<< endl;
     T* mrg = new T[s_a1 + s_a2 + 1]; //allocate new space for the merged array
     size_t n1 = 0, n2 = 0;
-    for(int i = 0; i < s_a1 + s_a2; i++){
+    for(size_t i = 0; i < s_a1 + s_a2; i++){
         if(n1 < s_a1 && n2 < s_a2){ //Keep checking it's within the boundaries of each array
             if(arr1[n1] < arr2[n2]){
                 mrg[i] = arr1[n1];

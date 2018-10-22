@@ -20,8 +20,9 @@ struct tree_node{
     void tree_insert(tree_node<T>* &root, const T &item); //inserts by comparing the node's items
     int height(); //gets height of the current node by propogating thru the children also
     void update_height(tree_node<T> *&node); //updates the height of the chosen node
-    void delete_node(tree_node<T> *&root, T item=T()); //deletes a specific node based on item
+    bool delete_node(tree_node<T> *&root, const T& item); //deletes a specific node based on item
     tree_node<T>* get_largest_node(tree_node<T>* root, tree_node<T> *&parent);
+    tree_node<T>* get_smallest_node(tree_node<T>* root, tree_node<T> *&parent);
     bool find_node(const T& item, tree_node<T>* &root);
     bool find_node(const T& item, tree_node<T> *&root, tree_node<T> **&node);
     void clear(tree_node<T>* &root); //deletes the root and all children
@@ -130,14 +131,17 @@ void tree_node<T>::update_height(tree_node<T>* &node){
 }
 
 template <class T> //uhh i think i had a brainfart when i made this. It still works well tho
-void tree_node<T>::delete_node(tree_node<T>* &root, T item){
+bool tree_node<T>::delete_node(tree_node<T>* &root, const T& item){
     tree_node<T>** node = NULL;
     if(!find_node(item, root, node))
-        return;
+        return false;
     else{
         tree_node<T>* largest = NULL;
+        tree_node<T>* smallest = NULL;
         tree_node<T>* parent = NULL;
+        tree_node<T>* small_parent = NULL;
         largest = get_largest_node((*node)->_left, parent);
+        smallest = get_smallest_node((*node)->_right, small_parent);
         if(largest){
             //Then there is a node to the left
             if(parent){
@@ -147,20 +151,24 @@ void tree_node<T>::delete_node(tree_node<T>* &root, T item){
                 (*node)->_left = NULL; //else the largest node was the left child
             (*node)->_item = largest->_item;
             delete largest;
+        }else if(smallest){
+            if(small_parent){
+                //Then there was a parent of the left node that is not this
+                small_parent->_right = NULL;
+            }else
+                (*node)->_right = NULL; //else the largest node was the left child
+            (*node)->_item = smallest->_item;
+            delete smallest;
         }else{
-            if((*node)->_right){
-                //There was no largest, so instead combine the right tree
-                (*node)->_item = (*node)->_right->_item;
-                (*node)->_right = (*node)->_right->_right;
-            }else{
-                //There's no node to the right so just set node to null and delete
-                tree_node<T>* temp = (*node);
-                (*node) = NULL;
-                delete temp;
-            }
+            //There's no node to the right so just set node to null and delete
+            tree_node<T>* temp = (*node);
+            (*node) = NULL;
+            delete temp;
+            return true;
         }
         root->update_height(root);
     }
+    return true;
 }
 template<class T>
 bool tree_node<T>::find_node(const T &item, tree_node<T> *&root){
@@ -171,7 +179,8 @@ bool tree_node<T>::find_node(const T &item, tree_node<T> *&root){
         this->_left->find_node(item, root);
     }else if(this->_right && item > this->_item){
         this->_right->find_node(item,root);
-    }else return false;
+    }
+    return false;
 }
 template<class T>
 bool tree_node<T>::find_node(const T& item, tree_node<T>* &root, tree_node<T>** &node){
@@ -196,6 +205,19 @@ tree_node<T>* tree_node<T>::get_largest_node(tree_node<T> *root, tree_node<T>* &
     if(root->_right != NULL){
         parent = root;
         return get_largest_node(root->_right, parent);
+    }else{
+        return root;
+    }
+}
+
+template<class T>
+tree_node<T>* tree_node<T>::get_smallest_node(tree_node<T> *root, tree_node<T>* &parent){
+    //returns pointer to node with the largest node in that tree.
+    if(root == NULL)
+        return NULL; //this would be bad, btw
+    if(root->_left != NULL){
+        parent = root;
+        return get_largest_node(root->_left, parent);
     }else{
         return root;
     }
@@ -257,6 +279,7 @@ tree_node<T>* tree_node<T>::rotate_right(tree_node<T>* &root){
         this->_left = root->_right;
         root->_right = this;
     }
+    return NULL;
 }
 
 template<class T>
@@ -282,6 +305,7 @@ tree_node<T>* tree_node<T>::rotate_left(tree_node<T>* &root){
         }
         root->_left = this;
     }
+    return NULL;
 }
 
 template<class T>

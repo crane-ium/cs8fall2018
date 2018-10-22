@@ -79,6 +79,7 @@ bool record<T>::string_hash_ex(const string& s2) const{
             if((int)skey[i] != (int)s2[i])
                 return (int)skey[i] < (int)s2[i];
         }
+    return 0;
 }
 
 template<class T>
