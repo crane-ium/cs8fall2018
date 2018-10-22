@@ -24,6 +24,7 @@ public:
     //CONST MEMBER FUNCTIONS
     void print_inorder() const; //Prints downwards and inorder
     void print() const; //Basic sideways print of tree with labels
+    void print_list() const; //print it like a list
     int get_size() const; //Would return the number of nodes in avl tree. Doesn't work atm
     //FRIEND FUNCTIONS
     template<class U>
@@ -31,8 +32,8 @@ public:
     template<class U> //Puts a tree consisting from node, into an array arr
     friend void tree_to_array(U* &arr, size_t &index, const tree_node<U>* node);
 private:
-    size_t _size; //not functional atm
     tree_node<T>* _head; //Tree
+    size_t _size; //not functional atm
 };
 
 //a_merge: array function that merges two sorted arrays
@@ -69,6 +70,11 @@ void avl<T>::insert(T item){
 template<class T>
 void avl<T>::print_inorder() const{
     _head->tree_print_inorder(_head, 0, cout);
+}
+
+template<class T>
+void avl<T>::print_list() const{
+    _head->tree_print_list(_head, 0, cout);
 }
 
 template <class T>
@@ -135,9 +141,9 @@ avl<T>& avl<T>::operator +=(const avl<T> &rhs){
     tree_node<T>* new_head = NULL;
     //To do a pre-order insert, to do O(h)* time, start from middle of the sorted array
     //  and work outwards  *h is height of tree
-    int middle = (int)((a_t1_s + a_t2_s)/2); //rounds up, meaning if size is even, middle will be towards top side
+    size_t middle = (int)((a_t1_s + a_t2_s)/2); //rounds up, meaning if size is even, middle will be towards top side
     new_head->tree_insert(new_head,a_both[middle]);
-    for(int i = 1; i <= middle; i++){
+    for(size_t i = 1; i <= middle; i++){
         if(middle+i < a_t1_s + a_t2_s)
             new_head->tree_insert(new_head,a_both[middle+i]);
         if(middle-i >= 0)

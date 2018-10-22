@@ -32,6 +32,7 @@ struct tree_node{
     //CONST MEMBER FUNCS
     void tree_print_inorder(tree_node<T>* root, int level, ostream& outs=cout) const;
     void tree_print(tree_node<T>* root, int level, ostream& outs=cout,  const bool &show_h=false) const;
+    void tree_print_list(tree_node<T>* root, int level, ostream& outs=cout) const;
     int balance_factor() const;
     //FRIEND FUNCS
     template<class U>
@@ -52,8 +53,10 @@ void tree_node<T>::tree_insert(tree_node<T>* &root, const T& item){
     }else if(item > root->_item){
         tree_insert(root->_right, item);
     }
-    if(item == root->_item)
+    if(item == root->_item){
+        root->_item = item;
         return;
+    }
     assert(item != root->_item); //quick check
     root->update_height(root);
 }
@@ -66,6 +69,15 @@ void tree_node<T>::tree_print_inorder(tree_node<T> *root, int level, ostream &ou
     outs << setw(level) << "";
     outs << root->_item << ": " << root->_height << endl;
     tree_print_inorder(root->_right, level+1, outs);
+}
+
+template<class T>
+void tree_node<T>::tree_print_list(tree_node<T>* root, int level, ostream& outs) const{
+    if(!root)
+        return;
+    tree_print_list(root->_left, level+1, outs);
+    outs << "[" << root->_item << "]  ";
+    tree_print_list(root->_right, level+1, outs);
 }
 
 template<class T>

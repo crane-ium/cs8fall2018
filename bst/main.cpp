@@ -5,15 +5,31 @@
 #include <time.h>
 #include "bst.h"
 #include <crtdbg.h>
+#include "record.h"
 
 using namespace std;
 
+void old_stuff();
+
 int main()
 {
-    int tmp;
-    tmp = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
-    tmp = (tmp & 0x0000FFFF) | _CRTDBG_CHECK_EVERY_16_DF;
-    _CrtSetDbgFlag(tmp);
+    avl<record<string> > hash_test;
+    hash_test.insert(record<string>(1, "test"));
+    hash_test.insert(record<string>(5, "s test", "string"));
+    for(int i = 0; i < 100; i++)
+        hash_test.insert(record<string>(rand()%100, to_string(rand()%100)
+                                        , (rand() % 2) ? ("") : ("string"+to_string(rand()%100))));
+//    hash_test.erase(record<string>(5, "", "string"));
+    hash_test.print_list();
+
+    cout << "Done\n";
+}
+
+void old_stuff(){
+//    int tmp;
+//    tmp = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
+//    tmp = (tmp & 0x0000FFFF) | _CRTDBG_CHECK_EVERY_16_DF;
+//    _CrtSetDbgFlag(tmp);
 
     avl<int> tree;
     int items[13] = {42, 13, 80, 9, 28, 77, 84, 54, 78, 89, 66, 5, 2};
@@ -61,5 +77,4 @@ int main()
     tree2 = tree;
     cout << "\nPrint tree2 that copied tree1!\n" << tree2 << endl;
 
-    cout << "Done\n";
 }
