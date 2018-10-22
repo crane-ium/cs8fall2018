@@ -3,3 +3,11 @@ snq/*
 *.autosave
 *build-*
 */*.pro*
+Dictionary/*
+PriorityQueue/*
+Resources/*
+hash_map/*
+prime_generator/*
+
+
+
